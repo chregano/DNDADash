@@ -28,6 +28,20 @@ const nextConfig = {
   ...(isStaticExport === 'true' && {
     output: 'export',
   }),
+  output: 'standalone',
+  experimental: {
+    serverActions: true,
+  },
+  async headers() {
+    return [
+      {
+        source: '/api/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'no-store' },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
