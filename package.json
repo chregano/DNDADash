@@ -1,8 +1,8 @@
 {
-  "name": "oflynn-bros-trading",
-  "author": "OFlynn Bros Trading",
+  "name": "dnda-trading",
+  "author": "DNDA Trading",
   "version": "1.0.0",
-  "description": "Crypto Trading FTW",
+  "description": "DNDA Trading",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3033",

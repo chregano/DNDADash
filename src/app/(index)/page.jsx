@@ -3,9 +3,9 @@ import { HomeView } from 'src/sections/home/view';
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: 'OFlynn Bros Trading',
+  title: 'DNDA Trading',
   description:
-    'Hey Bro? You like crypto?',
+    'Delta Neutral Digital Asset Trading',
 };
 
 export default function Page() {
