@@ -3,7 +3,7 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm install
+        - yarn install --frozen-lockfile
     build:
       commands:
         - echo "AUTH0_SECRET=$AUTH0_SECRET" >> .env.production
@@ -11,7 +11,7 @@ frontend:
         - echo "AUTH0_ISSUER_BASE_URL=$AUTH0_ISSUER_BASE_URL" >> .env.production
         - echo "AUTH0_CLIENT_ID=$AUTH0_CLIENT_ID" >> .env.production
         - echo "AUTH0_CLIENT_SECRET=$AUTH0_CLIENT_SECRET" >> .env.production
-        - npm run build
+        - yarn run build
   artifacts:
     baseDirectory: .next
     files:
