@@ -5,8 +5,8 @@ import Grid from '@mui/material/Unstable_Grid2';
 
 import { useEffect, useState, useCallback, useRef } from 'react';
 
-import { 
-  Table, TableRow, TableCell, TableBody, TableContainer, Paper, 
+import {
+  Table, TableRow, TableCell, TableBody, TableContainer, Paper,
   Collapse, IconButton, Typography, Box, TableHead
 } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -35,7 +35,7 @@ const TRANSFERS_TABLE_HEAD = [
   { id: 'to_exchange', label: 'To Exchange' },
   { id: 'amount', label: 'Amount' },
   { id: 'total_fees', label: 'Total Fees' },
-  { id: 'transfer_state', label: 'Transfer State' },  
+  { id: 'transfer_state', label: 'Transfer State' },
   { id: 'timestamp', label: 'Timestamp' },
 ];
 
@@ -70,7 +70,7 @@ export function DashboardView() {
     defaultTrade
   ]);
   const [balances, setBalances] = useState([
-    { balance_id: 1, exchange: "Loading...", equity: "Loading...", free_colato: "Loading...", side: "Loading...", entry_price: "Loading...", exit_price: "Loading...", leverage: "Loading...", pnl: "Loading...", symbol: "Loading..."},
+    { balance_id: 1, exchange: "Loading...", equity: "Loading...", free_colato: "Loading...", side: "Loading...", entry_price: "Loading...", exit_price: "Loading...", leverage: "Loading...", pnl: "Loading...", symbol: "Loading..." },
   ]);
   const [totalPnL, setTotalPnL] = useState(0);
   const [totalPortfolioValue, setTotalPortfolioValue] = useState(0);
@@ -78,46 +78,46 @@ export function DashboardView() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const hasInitLoaded = useRef(false);
-  const [portfolioHistoryGraphData, setPortfolioHistoryGraphData] = useState(null);  
+  const [portfolioHistoryGraphData, setPortfolioHistoryGraphData] = useState(null);
   const [transfers, setTransfers] = useState([]);
   const [selectedPortfolioId, setSelectedPortfolioId] = useState(null);
   const [orders, setOrders] = useState([]);
 
   const chartOptions = useChart({
-        stroke: { width: 3 },
-        grid: {
-            padding: {
-                top: 20,
-                left: 6,
-                right: 6,
-                bottom: 6,
-            },
-        },
-        chart: {
-            toolbar: {
-                show: true
-            },
-            zoom: {
-                enabled: true
-            },
-            margin: {
-                top: 20,
-                right: 20,
-                bottom: 20,
-                left: 20
-            }
-        },
-        xaxis: { categories: portfolioHistoryGraphData?.categories },
-    });
+    stroke: { width: 3 },
+    grid: {
+      padding: {
+        top: 20,
+        left: 6,
+        right: 6,
+        bottom: 6,
+      },
+    },
+    chart: {
+      toolbar: {
+        show: true
+      },
+      zoom: {
+        enabled: true
+      },
+      margin: {
+        top: 20,
+        right: 20,
+        bottom: 20,
+        left: 20
+      }
+    },
+    xaxis: { categories: portfolioHistoryGraphData?.categories },
+  });
 
   const handlePortfolioChange = useCallback((portfolioId) => {
     setSelectedPortfolioId(portfolioId);
     // Reset all data to loading state
     setTrades([defaultTrade]);
-    setBalances([{ 
-      balance_id: 1, 
-      exchange: "Loading...", 
-      equity: "Loading...", 
+    setBalances([{
+      balance_id: 1,
+      exchange: "Loading...",
+      equity: "Loading...",
       free_collateral: "Loading..."
     }]);
     setTotalPnL(0);
@@ -129,47 +129,47 @@ export function DashboardView() {
   useEffect(() => {
     if (user && !userLoading && selectedPortfolioId) {
       setIsLoading(true);
-      
+
       axiosInstance.get(`dashboardData/${selectedPortfolioId}/`)
         .then(response => {
-            console.log("Response: ",response);
-            setTrades(response.data.trades);
-            setBalances(response.data.balances);
-            setTotalPnL(response.data.total_pnl);
-            setTotalPortfolioValue(response.data.total_portfolio_value);
-            setError(null);
+          console.log("Response: ", response);
+          setTrades(response.data.trades);
+          setBalances(response.data.balances);
+          setTotalPnL(response.data.total_pnl);
+          setTotalPortfolioValue(response.data.total_portfolio_value);
+          setError(null);
         })
         .catch(error => {
-            setError(error);
-            console.log("Error: ",error);
-            error.response?.data?.detail && toast.error(error.response.data.detail);
-            setTrades(null);
-            setBalances(null);
-            setTotalPnL(null);
-            setTotalPortfolioValue(null);
+          setError(error);
+          console.log("Error: ", error);
+          error.response?.data?.detail && toast.error(error.response.data.detail);
+          setTrades(null);
+          setBalances(null);
+          setTotalPnL(null);
+          setTotalPortfolioValue(null);
         })
         .finally(() => {
           setIsLoading(false);
         });
-      axiosInstance.get(`portfolioHistory/${selectedPortfolioId}/`)
+      axiosInstance.get(`portfolioHistory/${selectedPortfolioId}`)
         .then(response => {
-            console.log("Response: ",response);
-            setPortfolioHistoryGraphData({
-                categories: response.data.portfolio_history.map(row => row.date),
-                series: [
-                  {
-                    name: 'Avg Portfolio Value',
-                    data: response.data.portfolio_history.map(row => parseFloat(row.avg_wallet_balance).toFixed(2)),
-                  }
-                ],
-              });
-            setError(null);
+          console.log("Response: ", response);
+          setPortfolioHistoryGraphData({
+            categories: response.data.portfolio_history.map(row => row.date),
+            series: [
+              {
+                name: 'Avg Portfolio Value',
+                data: response.data.portfolio_history.map(row => parseFloat(row.avg_wallet_balance).toFixed(2)),
+              }
+            ],
+          });
+          setError(null);
         })
         .catch(error => {
-            setError(error);
-            console.log("Error: ",error);
-            error.response?.data?.detail && toast.error(error.response.data.detail);
-            setPortfolioHistoryGraphData(null);
+          setError(error);
+          console.log("Error: ", error);
+          error.response?.data?.detail && toast.error(error.response.data.detail);
+          setPortfolioHistoryGraphData(null);
         })
         .finally(() => {
           setIsLoading(false);
@@ -283,7 +283,7 @@ export function DashboardView() {
                 </Typography>
                 <Table size="small" aria-label="purchases">
                   <TableBody>
-                  <TableRow>
+                    <TableRow>
                       <TableCell component="th" scope="row">Position ID</TableCell>
                       <TableCell>{transfer.position_id}</TableCell>
                     </TableRow>
@@ -384,7 +384,7 @@ export function DashboardView() {
                     </TableRow>
                   </TableBody>
                 </Table>
-                
+
                 <Typography variant="h6" gutterBottom component="div" sx={{ mt: 2 }}>
                   Order Updates
                 </Typography>
@@ -500,14 +500,14 @@ export function DashboardView() {
       )}
       {portfolioHistoryGraphData?.series ? (
         <Grid xs={12} md={12} lg={12} sx={{ mt: 4 }}>
-          <Chart type="line" series={portfolioHistoryGraphData?.series} options={chartOptions} height={400} />     
+          <Chart type="line" series={portfolioHistoryGraphData?.series} options={chartOptions} height={400} />
         </Grid>
       ) : (
         <Grid xs={12} md={12} lg={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 400, mt: 4 }}>
           <Typography variant="h6">Loading History...</Typography>
         </Grid>
       )}
-        
+
       <Grid xs={12} lg={12}>
         <h2>Trades</h2>
         <TableContainer component={Paper} sx={{ maxWidth: '100%', overflowX: 'auto' }}>
