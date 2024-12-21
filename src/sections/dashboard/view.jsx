@@ -130,7 +130,7 @@ export function DashboardView() {
     if (user && !userLoading && selectedPortfolioId) {
       setIsLoading(true);
 
-      axiosInstance.get(`dashboardData/${selectedPortfolioId}/`)
+      axiosInstance.get(`dashboardData/${selectedPortfolioId}`)
         .then(response => {
           console.log("Response: ", response);
           setTrades(response.data.trades);
